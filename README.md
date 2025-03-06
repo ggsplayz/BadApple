@@ -7,6 +7,11 @@
 </div>
 <br>
 
+# Important if using this!
+Due to GitHub storage limitations, you will need to manually download the TXT files containing the "frames" information;
+
+Just download the [FrameFiles.zip](https://github.com/ggsplayz/BadApple/raw/main/FrameFiles.zip) file and extract it, then copy both test30.txt and test60.txt to the BadApple/b folder.
+
 # Changes on this version (06/03/2025)
 - Replaced some characters from the frames file for a cleaner view.
 - Set console sizes (tested on Windows) which were missing on the original version.
