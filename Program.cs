@@ -1,4 +1,4 @@
-﻿/*
+/*
 
   CREDITS TO gh/viliusi FOR THE ORIGINAL PROJECT (https://github.com/viliusi/Bad-Apple-CSharp/)
   CREDITS TO gh/Chion82 FOR THE ORIGINAL CONVERSION TOOL (https://github.com/Chion82/ASCII_bad_apple)
@@ -25,9 +25,9 @@ public class Program
     {
         Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
         String debug = Directory.GetCurrentDirectory();
-        String allFrames = debug.Remove(debug.Length - 17) + "/test60.txt";
+        String allFrames = debug + "/b/test60.txt";
 
-        String soundtrack = debug.Remove(debug.Length - 17) + "/soundtrack.mp3"; // Set audio as well
+        String soundtrack = debug + "/b/soundtrack.mp3"; // Set audio as well
 
         Console.BackgroundColor = ConsoleColor.White;
         Console.ForegroundColor = ConsoleColor.Black;
@@ -45,6 +45,10 @@ public class Program
         using var outputDevice = new WaveOutEvent();
         outputDevice.Init(audioFile);
         outputDevice.Play();
+
+        int framesInSecond = 0;
+        double fps = 0;
+        Stopwatch fpsTimer = Stopwatch.StartNew();
 
         Thread.Sleep(100); // Wait for the audio
         Stopwatch stopwatch = Stopwatch.StartNew(); // Starts at the same time as the audio
@@ -88,6 +92,8 @@ public class Program
                 switch (split)
                 {
                     case true:
+
+                        /*
                         currentFrame.ForEach(i => Console.Write("{0}\n", i));
                         currentFrame.Clear();
 
@@ -110,6 +116,41 @@ public class Program
                         frameCount++; 
 
                         break;
+
+                        */
+
+                        double desfase = stopwatch.Elapsed.TotalMilliseconds - (frameCount * frameDuration);
+                        Console.SetCursorPosition(0, 0); // Asegurar que empieza desde la parte superior
+                        currentFrame.ForEach(i => Console.WriteLine(i)); // Imprimir el frame
+
+                        currentFrame.Clear();
+
+                        // Mueve el cursor a la parte inferior de la consola
+                        Console.SetCursorPosition(0, Console.WindowHeight - 2);
+                        Console.WriteLine($"Timestamp: {frameCount / 60:D2}:{frameCount % 60:D2} | Frame: {frameCount} | FPS: {fps:0.0} | Sync Offset: {desfase:+0.0;-0.0} ms ");
+
+
+                        // Sincronización de tiempo
+                        double targetTime = frameCount * frameDuration;
+                        double elapsedTime = stopwatch.Elapsed.TotalMilliseconds;
+                        double sleepTime = targetTime - elapsedTime;
+
+                        if (sleepTime > 0)
+                            Thread.Sleep((int)sleepTime);
+
+                        frameCount++;
+
+                        framesInSecond++;
+
+                        if (fpsTimer.ElapsedMilliseconds >= 1000)
+                        {
+                            fps = framesInSecond / (fpsTimer.ElapsedMilliseconds / 1000.0); // FPS real
+                            framesInSecond = 0;
+                            fpsTimer.Restart();
+                        }
+
+                        break;
+
                     case false:
                         break;
                     default:
