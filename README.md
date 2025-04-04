@@ -12,6 +12,8 @@ Due to GitHub storage limitations, you will need to manually download the TXT fi
 
 Just download the [FrameFiles.zip](https://github.com/ggsplayz/BadApple/raw/main/FrameFiles.zip) file and extract it, then copy both test30.txt and test60.txt to the BadApple/b folder.
 
+If done properly, you will be able to open the solution file in Visual Studio 2022 and compile it from there.
+
 # Changes on this version (06/03/2025)
 - Replaced some characters from the frames file for a cleaner view.
 - Set console sizes (tested on Windows) which were missing on the original version.
